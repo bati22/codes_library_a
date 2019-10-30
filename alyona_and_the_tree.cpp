@@ -1,19 +1,9 @@
 // Alyona and the Tree
 // http://codeforces.com/problemset/problem/682/C
+//DFS
+//O(n)
 
-/*
-Rozwi?zanie
-1. Przypisz wierzcho?kom kraw?d? (liczb? na niej) prowadz?c? do ich rodzic?w.
-2. Wylicz najwi?ksz? ?cie?ke dla ka?dego wierzcho?ka prowadz?c? z danego wierzcho?ka do przodka (najwi?ksza, tzn. suma liczb na kraw?dziach jest najwi?ksza).
-3. Wierzcho?ki, kt?rych najwi?ksza ?cie?ka jest wi?ksza ni? liczba na nich, oznacz jako odwiedzone.
-4. Wykonaj dfs(1), przy okazji liczac liczbe odwiedzin w zmiennej counter/
-5. result = n - counter
-6. Wy?wietl result.
 
-Dow?d
-Najwi?ksza ?cie?ka to co? przypominaj?cego sum? prefiksow?: je?li ?cie?ka do dziadka(?) jest wi?ksza od 0, to dodaj j? do maksymalnej ?cie?ki. Dfs odwiedzi tylko te wierzcho?ki, z kt?rymi ma po??czenie, wi?c te kt?rych nie odwiedzi? s? tymi skasowanymi.
-
-*/
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -98,11 +88,6 @@ int main()
     for (int i = 1; i <= n; i++)
         visited[i] = false;
 
-    /*cout << "Rodzice: " << endl;
-    for (long long i = 1; i <= n; i++)
-        cout << i << ": " << parent[i] << endl;
-    cout << endl;*/
-
     for (long long i = 2; i <= n; i++)
     {
         if (parent[i] == p[i])
@@ -114,27 +99,9 @@ int main()
             up_edge[p[i]] = c[i];
     }
 
-
-    /*cout << "Kraw?dzie do rodzica: " << endl;
-    for (long long i = 1; i <= n; i++)
-        cout << i << ": " << up_edge[i] << endl;
-    cout << endl;*/
-
     dfs_max_edge(1);
     for (long long i = 1; i <= n; i++)
         visited[i] = false;
-
-    /*cout << "Kraw?dzie max: " << endl;
-    for (long long i = 1; i <= n; i++)
-        cout << i << ": " << up_edge[i] << endl;
-    cout << endl;*/
-
-    /*cout << "Do usni?cia: " << endl;
-    for (long long i = 1; i <= n; i++)
-        if (delete_vertex[i])
-            cout << i << " ";
-    cout << endl;
-    cout << endl;*/
 
 
     for (long long i = 1; i <= n; i++)
