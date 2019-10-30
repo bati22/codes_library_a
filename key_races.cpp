@@ -1,3 +1,8 @@
+//Key races
+//https://codeforces.com/problemset/problem/835/A
+//math
+//O(1)
+
 #include <bits/stdc++.h>
 using namespace std;
 
