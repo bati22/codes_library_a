@@ -1,3 +1,7 @@
+//Equalize the Remainders
+//https://codeforces.com/problemset/problem/999/D
+// implementation
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -31,19 +35,19 @@ int main()
 		while(val[cur].size() > k)
 		{
 			ll element = val[cur].back();
-			ll indeks = i;
+			ll index = i;
 			val[cur].pop_back();
-			fre.push_back(make_pair(element, indeks));
+			fre.push_back(make_pair(element, index));
 		}
 
 		while(val[cur].size() < k && !fre.empty())
 		{
 			ll element = fre.back().first;
-			ll indeks = fre.back().second;
+			ll index = fre.back().second;
 			fre.pop_back();
 			val[cur].push_back(element);
-			a[element] += i-indeks;
-			result += i-indeks;
+			a[element] += i-index;
+			result += i-index;
 		}
 	}
 
