@@ -1,3 +1,8 @@
+//Maximal intersection
+//https://codeforces.com/problemset/problem/1029/C
+//math
+//O(n)
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -86,7 +91,7 @@ int main()
 2 6
 0 4
 3 3
-Wynik: 1
+result: 1
 
 5
 2 6
@@ -94,17 +99,17 @@ Wynik: 1
 0 4
 1 20
 0 4
-Wynik: 2
+result: 2
 
 3
 4 5
 1 2
 9 20
-Wynik: 0
+result: 0
 
 2
 3 10
 1 5
-Wynik: 7
+result: 7
 
 */
