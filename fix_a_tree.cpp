@@ -1,14 +1,7 @@
 // Fix a Tree
 // http://codeforces.com/problemset/problem/698/B
-/*
-Rozwi?zanie
-1. Znajd? zap?tlony do siebie wierzcho?ek i oznacz go jako main_root, je?li go nie ma, stw?rz go przy przerwaniu pierwszego cyklu.
-2. Wykonaj dfsa.
-3. Je?li wyst?pi? cykl (i nie jest to korze?), przerwij wierzcho?ek i poprowa? go do main_root (je?li takowy ju? jest), zliczaj liczb? operacji i uaktualniaj kopi? tablicy p.
-
-Dow?d
-Graf w zadaniu sk?ada si? z jednego b?d? wielu graf?w sp?jnych. W ka?dym grafie jest tylko jedna p?tla, gdy? ka?dy wierzcho?ek tworzy po??cznie tylko z jednym wierzcho?kiem.
-*/
+//DFS
+//O(n)
 
 
 
