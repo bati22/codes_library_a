@@ -1,54 +1,60 @@
+//Messenger
+//https://codeforces.com/problemset/problem/631/D
+//KMP
+//O(n)
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll N_MAX = 1000123;
 ll n, m;
-string wyraz[N_MAX];
+string word[N_MAX];
 
-ll liczba;
-string liczba_wyraz;
-char znak;
+ll num;
+string num_word;
+char c;
 
 vector <pair<char, ll> > W;
 vector <pair<char, ll> > T;
-pair <char, ll> para;
+pair <char, ll> this_pair;
 
-string wyraz_now;
-string wyraz_next;
+string word_now;
+string word_next;
 
 
 vector <pair<char, ll> > S;
 
 ll ps[N_MAX];
 ll t;
-ll pocz, kon;
+ll beg; 
+ll endi;
 
 
-void konwert(ll n, vector <pair<char, ll> >* X)
+void conv(ll n, vector <pair<char, ll> >* X)
 {
 	for (int i = 0; i < n; i++)
 	{
-		wyraz_now = wyraz[i];
+		word_now = word[i];
 		int j = 0;
-		liczba_wyraz = "";
-		while (wyraz_now[j] >= '0' && wyraz_now[j] <= '9')
+		num_word = "";
+		while (word_now[j] >= '0' && word_now[j] <= '9')
 		{
-			liczba_wyraz += wyraz_now[j];
+			num_word += word_now[j];
 			j++;
 		}
 
-		liczba += atoll(liczba_wyraz.c_str());
-		znak = wyraz_now[wyraz_now.size()-1];
+		num += atoll(num_word.c_str());
+		c = word_now[word_now.size()-1];
 
 
 		if (i != n-1)
-			wyraz_next = wyraz[i+1];
-		if (i == n-1 || wyraz_now[wyraz_now.size()-1]!=wyraz_next[wyraz_next.size()-1]) // koniec takich samychl literek, wiec musze dodac pare
+			word_next = word[i+1];
+		if (i == n-1 || word_now[word_now.size()-1]!=word_next[word_next.size()-1]) 
 		{
-			para.first = znak;
-			para.second = liczba;
-			X->push_back(para);
-			liczba = 0;
+			this_pair.first = c;
+			this_pair.second = num;
+			X->push_back(this_pair);
+			num = 0;
 		}
 	}
 }
@@ -60,23 +66,12 @@ int main()
 	ios_base::sync_with_stdio();
 	cin >> n >> m;
 	for (int i = 0; i < n; i++)
-		cin >> wyraz[i];
-	konwert(n, &T);
+		cin >> word[i];
+	conv(n, &T);
 
 	for (int i = 0; i < m; i++)
-		cin >> wyraz[i];
-	konwert(m, &W);
-
-	/*cout << "Tekst: " << endl;
-	for (unsigned int i = 0; i < T.size(); i++)
-		cout << T[i].first << " " << T[i].second << endl;
-	cout << endl;*/
-
-	/*cout << "Wzorzec: " << endl;
-	for (unsigned int i = 0; i < W.size(); i++)
-		cout << W[i].first << " " << W[i].second << endl;
-	cout << endl;*/
-
+		cin >> word[i];
+	conv(m, &W);
 
 	if (W.size()==1)
 	{
@@ -108,18 +103,12 @@ int main()
 		for (unsigned int i = 1; i < W.size()-1; i++)
 			S.push_back(W[i]);
 
-		para.first = '#';
-		para.second = '0';
-		S.push_back(para);
+		this_pair.first = '#';
+		this_pair.second = '0';
+		S.push_back(this_pair);
 
 		for (unsigned int i = 1; i < T.size()-1; i++)
 			S.push_back(T[i]);
-
-		/*cout << "S: " << endl;
-		for (unsigned int i = 0; i < S.size(); i++)
-			cout << S[i].first;
-		cout << endl;
-		cout << endl;*/
 
 		ps[0] = 0;
 		t = ps[0];
@@ -132,26 +121,20 @@ int main()
 			ps[i] = t;
 		}
 
-		/*cout << "ps: " << endl;
-		for (unsigned int i = 0; i < S.size(); i++)
-			cout << ps[i] << " ";
-		cout << endl;
-		cout << endl;*/
-
 		for (unsigned int i = 0; i < S.size(); i++)
 		{
 			if (ps[i] == W.size()-2)
 			{
-				kon = i;
-				kon -= (W.size()-2);
-				kon++;
+				endi = i;
+				endi -= (W.size()-2);
+				endi++;
 
-				pocz = kon-W.size()+1; 
+				beg = endi-W.size()+1; 
 
-				if (T[pocz].first==W[0].first && 
-					T[kon].first==W[W.size()-1].first &&
-					T[pocz].second>=W[0].second &&
-					T[kon].second>= W[W.size()-1].second)
+				if (T[beg].first==W[0].first && 
+					T[endi].first==W[W.size()-1].first &&
+					T[beg].second>=W[0].second &&
+					T[endi].second>= W[W.size()-1].second)
 				{
 					result++;
 				}
@@ -161,7 +144,6 @@ int main()
 
 	}
 
-	//cout << "Wynik: " << endl;
 	cout << result << endl;
 
 
@@ -172,28 +154,21 @@ int main()
 5 3
 3-a 2-b 4-c 3-a 2-c
 2-a 2-b 1-c
-Wynik: 1
-
-
+Result: 1
 6 1
 3-a 6-b 7-a 4-c 8-e 2-a
 3-a
-Wynik: 6
-
+Result: 6
 5 5
 1-h 1-e 1-l 1-l 1-o
 1-w 1-o 1-r 1-l 1-d
-Wynik: 0
-
+Result: 0
 5 1
 3-a 2-b 4-c 3-a 2-c
 2-c
-Wynik: 4
-
+Result: 4
 5 3
 2-a 1-a 2-b 3-a 4-b
 2-a 1-a 2-b
-Wynik: 2
-
-
+Result: 2
 */
