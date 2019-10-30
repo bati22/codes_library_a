@@ -1,33 +1,28 @@
- By bati, contest: Semestr letni 15-16: Zadania domowe, problem: (B3) Bajtolotek - Hard, Accepted, #
+//Oszukac sprawdzarke
+//binsearch + sorting
+// O(n log(n))
 
 #include <iostream>
 #include <cstdio>
 using namespace std;
 
 void quicksort(int t[], int n, int d, int g);
-int logarytm(int liczba);
-int przeszukiwanie_binarne(int t[], int indeks[], int n, int poczatek, int koniec, int szukana, int czas, int czas_max);
+int log(int n);
+int binsearch(int t[], int index[], int n, int l, int r, int x, int thisTime, int timeMax);
 
 int main()
 {
-    //cout << "Ile liczb?" << endl;
     int n;
     scanf("%d", &n);
 
-    //cout << "Wprowad? liczby do tablicy: " << endl;
     int t[n];
-    int indeks1[n];
-    int indeks2[n];
+    int indexOne[n];
+    int indexTwo[n];
     for (int i = 0; i < n; i++)
         scanf("%d", &t[i]);
 
 
     quicksort(t, n, 0, n-1);
-
-    /*cout << "Posortowane: " << endl;
-    for (int i =0 ; i <n; i++)
-        cout << t[i] << '\t';
-    cout << endl;*/
 
     int bufor = -1;
     int j = -1;
@@ -36,39 +31,26 @@ int main()
         if (bufor != t[i])
         {
             j++;
-            indeks1[j] = i;
+            indexOne[j] = i;
             bufor = t[i];
-            indeks2[j] = i;
+            indexTwo[j] = i;
         }
 
         else
-            indeks2[j]++;
+            indexTwo[j]++;
     }
     j++;
 
-    /*cout << "Indeksy pierwsze: " << endl;
-    for (int i = 0; i < j; i++)
-        cout << indeks1[i] << '\t';
-    cout << endl;
+    int nSearch;
+    scanf("%d", &nSearch);
 
-    cout << "Indeksy drugie: " << endl;
-    for (int i = 0; i < j; i++)
-        cout << indeks2[i] << '\t';
-    cout << endl;*/
+    int toFind[nSearch];
+    for (int i = 0; i < nSearch; i++)
+        scanf("%d", &toFind[i]);
 
-    //cout << "Ile liczb szukasz?"  << endl;
-    int ile_szukam;
-    scanf("%d", &ile_szukam);
-
-    //cout << "Jakich szukasz?" << endl;
-    int szukane[ile_szukam];
-    for (int i = 0; i < ile_szukam; i++)
-        scanf("%d", &szukane[i]);
-
-    //cout << "Wyniki" << endl;
-    for (int i = 0; i < ile_szukam; i++)
+    for (int i = 0; i < nSearch; i++)
     {
-        bufor = przeszukiwanie_binarne(t, indeks2, j, 0, j-1, szukane[i], -1, logarytm(j));
+        bufor = binsearch(t, indexTwo, j, 0, j-1, toFind[i], -1, log(j));
         if (bufor < 0)
         {
             printf("%d", 0);
@@ -77,7 +59,7 @@ int main()
 
         else
         {
-            printf("%d", indeks2[bufor] - indeks1[bufor] + 1 );
+            printf("%d", indexTwo[bufor] - indexOne[bufor] + 1 );
             printf("%c", '\n');
         }
     }
@@ -113,34 +95,34 @@ void quicksort(int t[], int n, int d, int g)
         quicksort(t, n, l, g);
 }
 
-int przeszukiwanie_binarne(int t[], int indeks[], int n, int poczatek, int koniec, int szukana, int czas, int czas_max)
+int binsearch(int t[], int index[], int n, int l, int r, int x, int thisTime, int timeMax)
 {
-    czas++;
-    if (czas > czas_max)
+    thisTime++;
+    if (thisTime > timeMax)
         return -1;
 
-    int srodek = (poczatek + koniec)/2;
-    if (szukana == t[indeks[srodek]])
+    int mid = (l + r)/2;
+    if (x == t[index[mid]])
     {
-        return srodek;
+        return mid;
     }
 
     else
     {
-        if (szukana < t[indeks[srodek]])
-            przeszukiwanie_binarne(t, indeks, n, poczatek, srodek-1, szukana, czas, czas_max);
+        if (x < t[index[mid]])
+            binsearch(t, index, n, l, mid-1, x, thisTime, timeMax);
         else
-            przeszukiwanie_binarne(t, indeks, n, srodek+1, koniec, szukana, czas, czas_max);
+            binsearch(t, index, n, mid+1, r, x, thisTime, timeMax);
     }
 
 
 }
 
-int logarytm(int liczba)
+int log(int n)
 {
     int c = 0;
     int b = 1;
-    while (b <= liczba)
+    while (b <= n)
     {
         c++;
         b*=2;
@@ -148,5 +130,3 @@ int logarytm(int liczba)
 
     return c;
 }
-
-
